@@ -63,3 +63,19 @@ with open(file=path, mode="w", newline="") as f:
 
 ### 5. csv.field_size_limit([new_limit])
 返回能分析的最大的field size，如果new_limit赋值，则它成为新的limit(64bit 下windows为131072)
+
+### 6. csv.register_dialect(name[, dialect[, **fmtparams]])
+* params:
+  * name 注册的name
+  * dialect/fmtparams 一个Dialect的子类或者指定关键字参数或者两者同时指定,如果同时指定，关键字参数将覆盖Dialect子类中的属性值
+
+```
+Example:  
+register_dialect("excel", excel)
+```
+
+### 7. csv.unregister_dialect(name)
+* 注销一个dialect，如果给出的name未被注册，则raise _csv.ERROR
+
+## 三. classes
+### 1. class csv.DictReader(f, fieldnames=None, restkey=None, restval=None, dialect='excel', *args, **kwds)
