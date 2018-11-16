@@ -145,7 +145,19 @@ with open('example.csv', newline='') as csvfile:
     reader = csv.reader(csvfile, dialect)
 ```
 
-## 四. Advanced
+## 四. Exception
+exception csv.Error
+```
+class Error(Exception):
+    # no doc
+    def __init__(self, *args, **kwargs): # real signature unknown
+        pass
+
+    __weakref__ = property(lambda self: object(), lambda self, v: None, lambda self: None)  # default
+    """list of weak references to the object (if defined)"""
+```
+
+## 五. Advanced
 ### 1.reader对象(一个DictReader的实例，或者是reader()函数返回的对象)
 ```
 method：
