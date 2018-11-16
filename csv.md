@@ -79,3 +79,95 @@ register_dialect("excel", excel)
 
 ## 三. classes
 ### 1. class csv.DictReader(f, fieldnames=None, restkey=None, restval=None, dialect='excel', *args, **kwds)
+* description:
+  创建一个reader对象，但是每行的信息都会map到一个OrderDict,fieldnames提供sequence为dict的key.
+* params:
+  * filednames: 是一个list，用来指定dict的key，如果filednames omitted则会使用f的第一行作为key
+  * restkey: 当f中的一行多于filednames,会使用restkey作为剩下的filed的key(剩下的filed会放到一个list中)
+  * restval: 当f中的一行少于filednames，则用restval填充
+  * other  : 其他的params作为基本的reader参数
+```
+Example:
+>>> import csv
+>>> with open('names.csv', newline='') as csvfile:
+...     reader = csv.DictReader(csvfile)
+...     for row in reader:
+...         print(row['first_name'], row['last_name'])
+```
+
+### 2. class csv.DictWriter(f, fieldnames, restval='', extrasaction='raise', dialect='excel', *args, **kwds)
+* description:
+  创建一个writer对象，
+* params:
+  * filednames: 是一个list,用来标识传递给writerow()方法中的植被写入f的顺序
+  * restval   : 当写入的dict对于fieldnames缺失key，就用restval来填充
+  * extrasaction: 当传入writerow()中的dict的key在filednames中没有找到，用来设置行为，如果设置为raise，会raise ValueError,如果设置为ignore，将会被忽略
+  * other     ：其他的params作为基本的writer的参数
+
+```
+Example:
+with open('names.csv', 'w', newline='') as csvfile:
+    fieldnames = ['first_name', 'last_name']
+    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+
+    writer.writeheader()
+    writer.writerow({'first_name': 'Baked', 'last_name': 'Beans'})
+    writer.writerow({'first_name': 'Lovely', 'last_name': 'Spam'})
+    writer.writerow({'first_name': 'Wonderful', 'last_name': 'Spam'})
+```
+### 3. class csv.Dialect
+* 定义csv format的一些基本的attr
+
+### 4. class csv.excel
+* 定义基于excel的Dialect(默认分隔符为， 换行符为\r\n)
+
+### 5. class csv.excel_tar
+* 定义基于excel的Dialect(默认分隔符为tab 换行符为\r\n)
+
+### 6. class csv.unix_dialect
+* 定义基于unix的Dialect(默认分割符为， 换行符为\n)
+
+### 7. class csv.Sniffer
+* description:
+Sniffer是嗅探的意思，用于推断csv format
+* method:
+```
+  1.sniff(sample, delimiters=None)
+  分析给定的sample，返回Dialect子类
+  2.has_header(sample)
+  分析给定的sample文本，如果第一行看起来是一系列的标题，则返回True
+```
+```
+Example：
+with open('example.csv', newline='') as csvfile:
+    dialect = csv.Sniffer().sniff(csvfile.read(1024))
+    csvfile.seek(0)
+    reader = csv.reader(csvfile, dialect)
+```
+
+## 四. Advanced
+### 1.reader对象(一个DictReader的实例，或者是reader()函数返回的对象)
+```
+method：
+  1) csvreader.__next__()
+  * description:
+  reader将根据dialect分析，把下一行的内容以一个列表的形式返回，如果是DictReader的实例，将返回一个dict
+attr：
+  1）csvreader.dialect
+  返回一个只读的dialect的描述
+  2）csvreader.line_num
+  返回从源iter读的line num
+  3）csvreader.fieldnames
+  返回filednames,如果在创建对象的时候未传递filednames,将在首次访问或者从文件的第一行初始化此属性
+```
+### 2.writer对象(一个DictWriter的实例，或者是writer()函数返回的对象)
+```
+method:
+  1）csvwriter.writerow(row)
+  根据当前的dialect format 写入文件对象，row可以是任意的可迭代对象
+  2）csvwriter.writerows(rows)
+attr:
+  1）dialect
+DictWriter:
+  1) DictWriter.writeheader()
+```
