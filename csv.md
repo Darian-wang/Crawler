@@ -2,8 +2,8 @@
 ## 一.Constants
 ```
 这几个Constants的值分别为0,1,2,3.用来指定quoting参数.
-csv.QUOTE_MINIMAL:field里面含有delimiter,quotechar才用quotechar括起来
-csv.QUOTE_ALL:all field写入的时候用quotechar括起来
+QUOTE_MINIMAL:field里面含有delimiter,quotechar才用quotechar括起来
+QUOTE_ALL:all field写入的时候用quotechar括起来
 QUOTE_NONNUMERIC:field为非数字的时候才用quotechar括起来
 QUOTE_NONE：all field都不括起来
 Note:
