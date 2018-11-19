@@ -34,7 +34,7 @@ Example:
    for element in reader:
       print(element)
 2) path = "C:\wqj\linux.csv"
-   with open(path, "r", encoding="utf8") as f:
+   with open(path, "r", encoding="utf8", newline="") as f:
       reader = csv.reader(f)
       for line in reader:
           print(line)
